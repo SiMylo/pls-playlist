@@ -1,0 +1,42 @@
+categories:
+  - category1:
+    - "Folder Name"
+    - "Other Folder Name"
+    # Only specific tracks from a folder, multiple regex allowed
+    - {folder: "Folder Name", regex: ["^0[123459]", "^1"]}
+
+  - category2:
+    - "More Folders" 
+    # In order to specify regex, you must also specify a folder
+    - {folder: ".", regex: "Specific Word"}
+
+groupings:
+  custom:
+    # All entries must have name / regex; folder is optional.
+    - name: Multiple Movements
+      regex: "\\d+ - Symphony No\\.([\\d ]+)"
+    - name: Tracks by Number
+      folder: A Folder Name
+      regex: ["1[5-9]", "2\\d"]
+  # Groups things by album, assuming a folder structure that has Artist/Album/Tracks
+  album:
+    - name: Album
+      regex: "([^/]+)/([^/]+)/"
+
+playlists:
+  # Name grouping and at least one of include or exclude required.
+  - name: custom_category1
+    grouping: custom
+    exclude: ["category1, category2"]
+  - name: album_category1
+    grouping: album
+    exclude: ["category1, category2"]
+  - name: custom_category2
+    grouping: custom
+    include: category2
+  - name: album_category2
+    grouping: album
+    include: category2
+  - name: custom_category1
+    grouping: none
+    exclude: ["category1, category2"]
