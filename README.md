@@ -1,5 +1,5 @@
-# psl-playlist
-Writes PSL playlists based on a music library and configuration files.
+# pls-playlist
+Writes PLS playlists based on a music library and configuration files.
 See playlist-template.yml for an example of how to create that database.
 
 For now, the usage is to create that database and then run
