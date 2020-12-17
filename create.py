@@ -35,7 +35,6 @@ def parse_args():
     """Parse command line arguments."""
     parser = ArgumentParser()
     parser.add_argument('path', type=Path)
-    parser.add_argument('output_file', type=Path)
 
     return parser.parse_args()
 
@@ -50,5 +49,6 @@ def find_files(path):
 if __name__ == '__main__':
     args = parse_args()
     database = TrackDatabase(str(args.path))
+    database.make_playlists('output')
     # paths = find_files(args.path)
     # Playlist(paths).write_file(args.output_file,relpath=args.path)

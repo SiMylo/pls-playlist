@@ -3,7 +3,9 @@ categories:
     - "Folder Name"
     - "Other Folder Name"
     # Only specific tracks from a folder, multiple regex allowed
-    - {folder: "Folder Name", regex: ["^0[123459]", "^1"]}
+    # It is assumed with regex that there are no characters between
+    # the end of the folder name and the beginning of the regex.
+    - {folder: "Folder Name", regex: ["0[123459]", "1"]}
 
   - category2:
     - "More Folders" 
@@ -17,7 +19,7 @@ groupings:
       regex: "\\d+ - Symphony No\\.([\\d ]+)"
     - name: Tracks by Number
       folder: A Folder Name
-      regex: ["1[5-9]", "2\\d"]
+      regex: ["1[5-9]", "2"]
   # Groups things by album, assuming a folder structure that has Artist/Album/Tracks
   album:
     - name: Album

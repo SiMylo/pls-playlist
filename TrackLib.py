@@ -10,6 +10,6 @@ class TrackLib():
 
   def get_info(self,filename):
     if filename not in self.instances:
-      self.instances[filename] = {'title': filename.stem, 'length': MP3(filename).info.length}
+      self.instances[filename] = {'title': os.path.basename(filename), 'length': MP3(filename).info.length}
 
     return self.instances[filename]
