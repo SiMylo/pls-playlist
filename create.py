@@ -23,18 +23,17 @@ __ http://forums.winamp.com/showthread.php?threadid=65772
 from argparse import ArgumentParser
 import os.path
 from pathlib import Path
-import yaml
 import re
 from TrackDatabase import TrackDatabase
 
 
-PATTERN = re.compile(r'.mp3$', re.I)
+PATTERN = re.compile(r".mp3$", re.I)
 
 
 def parse_args():
     """Parse command line arguments."""
     parser = ArgumentParser()
-    parser.add_argument('path', type=Path)
+    parser.add_argument("path", type=Path)
 
     return parser.parse_args()
 
@@ -46,9 +45,10 @@ def find_files(path):
             filename = os.path.join(root, fn)
             yield Path(filename)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     args = parse_args()
     database = TrackDatabase(str(args.path))
-    database.make_playlists('output')
+    database.make_playlists("output")
     # paths = find_files(args.path)
     # Playlist(paths).write_file(args.output_file,relpath=args.path)
