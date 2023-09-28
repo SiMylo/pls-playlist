@@ -23,9 +23,8 @@ class TrackDatabase:
         self.categories = {}
         self.group_config = {}
         self.playlists = {}
-        if os.path.isfile(path):
-            with open(path, "r") as configfile:
-                raw_config = yaml.load(configfile, Loader=yaml.FullLoader)
+        with open(path, "r") as configfile:
+            raw_config = yaml.load(configfile, Loader=yaml.FullLoader)
         if "categories" not in raw_config:
             raw_config["categories"] = {}
         if "playlists" not in raw_config:
