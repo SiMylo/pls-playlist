@@ -22,13 +22,14 @@ Based on Jochen Kupperschmidt's work
 import os
 from itertools import count
 from TrackLib import TrackLib
-   
-class Playlist():
-    tracks = TrackLib() 
 
-    def __init__(self,files=[]):
+
+class Playlist:
+    tracks = TrackLib()
+
+    def __init__(self, files=[]):
         self.filelist = files
-  
+
     @staticmethod
     def create_track_entry(number, path, *, relpath=None):
         """Create a track entry."""
@@ -37,37 +38,40 @@ class Playlist():
             path = os.path.relpath(path, relpath)
 
         return {
-            'number': number,
-            'file': path,
-            'title': track['title'],
-            'length': track['length']
+            "number": number,
+            "file": path,
+            "title": track["title"],
+            "length": track["length"],
         }
 
-    def write_file(self,filename,*,relpath=None):
-        with open(filename,'w+') as outfile:
-            outfile.writelines(self.generate_contents(relpath))
-  
-    def generate_contents(self,relpath=None):
+    def write_file(self, filename, *, relpath=None):
+        with open(filename, "w+") as outfile:
+            for content in self.generate_contents(relpath):
+                try:
+                    outfile.write(content)
+                except UnicodeEncodeError:
+                    print(f"Filename: {filename}\nContents: {content}")
+                    raise
+
+    def generate_contents(self, relpath=None):
         """Generate a PLS playlist from file list."""
-        yield '[playlist]\n\n'
+        yield "[playlist]\n\n"
 
         total = 0
 
         entry_template = (
-            'File{number:d}={file}\n'
-            'Title{number:d}={title}\n'
-            'Length{number:d}={length}\n\n')
+            "File{number:d}={file}\n"
+            "Title{number:d}={title}\n"
+            "Length{number:d}={length}\n\n"
+        )
 
         for track_entry in self.get_track_entries(relpath):
             total += 1
             yield entry_template.format(**track_entry)
 
-        yield (
-            'NumberOfEntries={:d}\n'
-            'Version=2\n').format(total)
+        yield ("NumberOfEntries={:d}\n" "Version=2\n").format(total)
 
-
-    def get_track_entries(self,relpath=None):
+    def get_track_entries(self, relpath=None):
         """Generate track entries."""
         numbers = count(1)
         for number, filename in zip(numbers, self.filelist):
